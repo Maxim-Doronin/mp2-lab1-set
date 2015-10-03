@@ -9,14 +9,21 @@
 
 TBitField::TBitField(int len)
 {
+	BitLen = len;
+	MemLen = len >> 4;
+	pMem = new TELEM [MemLen];
 }
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
 {
+	BitLen = bf.GetLength();
+	MemLen = BitLen >> 4;
+	pMem = new TELEM [MemLen];
 }
 
 TBitField::~TBitField()
 {
+	delete [] pMem;
 }
 
 int TBitField::GetMemIndex(const int n) const // индекс Мем для бита n
