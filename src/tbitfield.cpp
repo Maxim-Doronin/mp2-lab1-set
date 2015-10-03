@@ -41,20 +41,25 @@ TELEM TBitField::GetMemMask(const int n) const // битовая маска дл
 
 int TBitField::GetLength(void) const // получить длину (к-во битов)
 {
-  return 0;
+	return BitLen;
 }
 
 void TBitField::SetBit(const int n) // установить бит
 {
+	int i = GetMemIndex(n);
+	pMem[i] = pMem[i] | GetMemMask(n);
 }
 
 void TBitField::ClrBit(const int n) // очистить бит
 {
+	int i = GetMemIndex(n);
+	pMem[i] = pMem[i] & ~GetMemMask(n);
 }
 
 int TBitField::GetBit(const int n) const // получить значение бита
 {
-  return 0;
+	int i = GetMemIndex(n);
+	return (pMem[i] & GetMemMask(n)) >> (n % 16);
 }
 
 // битовые операции
