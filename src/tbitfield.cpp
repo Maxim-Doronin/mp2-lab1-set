@@ -9,6 +9,7 @@
 
 TBitField::TBitField(int len)
 {
+	if (len < 0) throw "NEGATIVE_LENGTH";
 	BitLen = len;
 	MemLen = (len+31) >> 5;
 	pMem = new TELEM [MemLen];
@@ -59,6 +60,7 @@ void TBitField::SetBit(const int n) // установить бит
 		int i = GetMemIndex(n);
 		pMem[i] = pMem[i] | GetMemMask(n);
 	}
+	else throw "SET_BIT_WITH_NEGATIVE_OR_TOO_LARGE_INDEX";
 }
 
 void TBitField::ClrBit(const int n) // очистить бит
@@ -68,6 +70,7 @@ void TBitField::ClrBit(const int n) // очистить бит
 		int i = GetMemIndex(n);
 		pMem[i] = pMem[i] & ~GetMemMask(n);
 	}
+	else throw "CLEAR_BIT_WITH_NEGATIVE_OR_TOO_LARGE_INDEX";
 }
 
 int TBitField::GetBit(const int n) const // получить значение бита
@@ -77,6 +80,7 @@ int TBitField::GetBit(const int n) const // получить значение б
 		int i = GetMemIndex(n);
 		return (pMem[i] & GetMemMask(n)) >> (n % 16);
 	}
+	else throw "GET_BIT_WITH_NEGATIVE_OR_TOO_LARGE_INDEX";
 	return 0;
 }
 
