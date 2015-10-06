@@ -105,8 +105,30 @@ TSet TSet::operator~(void) // дополнение
 
 istream &operator>>(istream &istr, TSet &s) // ввод
 {
+	int tmp;
+	char ch;
+	do {istr >> ch;} while (ch != '{');
+	do {
+		istr >> tmp;
+		s.InsElem(tmp);
+		do {istr >> ch;} while ((ch != ',')&&(ch != '}'));}
+	while (ch != '}');
+	return istr;
+
 }
 
 ostream& operator<<(ostream &ostr, const TSet &s) // вывод
 {
+	char ch = ' ';
+	ostr << '{';
+	for (int i = 0; i < s.GetMaxPower(); i++)
+	{
+		if (s.IsMember(i))
+		{
+			ostr << ch << i;
+			ch = ',';
+		}
+	}
+	ostr << '}';
+	return ostr;
 }
