@@ -109,12 +109,19 @@ TBitField& TBitField::operator=(const TBitField &bf) // присваивание
 
 int TBitField::operator==(const TBitField &bf) const // сравнение
 {
+	TELEM MemMask = 0xffffffff;
 	int result = 1;
 	if (BitLen != bf.BitLen) 
 		result = 0;
 	else
-		for (int i = 0; i < MemLen; i++)
-			if (pMem[i] != bf.pMem[i])
+		for (int i = 0; i < MemLen-1; i++)
+			if ((pMem[i] & MemMask) != (bf.pMem[i] & MemMask))
+			{
+				result = 0;
+				break;
+			}
+		for (int i = (MemLen-1) << 5; i < BitLen; i++)
+			if (GetBit(i) != bf.GetBit(i))
 			{
 				result = 0;
 				break;
