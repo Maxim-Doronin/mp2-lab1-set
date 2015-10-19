@@ -169,6 +169,8 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 		tmp.pMem[i] = pMem[i];
 	for (int i = 0; i < bf.MemLen; i++)
 		tmp.pMem[i] &= bf.pMem[i];
+	for (int i = bf.BitLen; i < BitLen; i++)
+		tmp.ClrBit(i);
 	return tmp;
 }
 
